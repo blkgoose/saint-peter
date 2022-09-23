@@ -56,10 +56,10 @@ impl Config {
 fn main() {
     let key_arg = Arg::with_name("key_name").required(true).index(1);
 
-    let arguments = App::new("peter")
         .version("0.0.1 dev")
+    let arguments = App::new("saint-peter")
         .author("Alessio Biancone <alebian1996@gmail.com>")
-        .bin_name("peter")
+        .bin_name("saint-peter")
         .subcommand_required(true)
         .subcommand(
             clap::command!("add-existing")
