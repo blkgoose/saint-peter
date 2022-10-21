@@ -69,11 +69,16 @@ fn main() {
                 .arg(
                     clap::arg!(--"file" <PATH>)
                         .required(true)
-                        .value_parser(clap::value_parser!(std::path::PathBuf)),
-                ),
+                        .value_parser(clap::value_parser!(std::path::PathBuf))
+                        .help("Key file where to get pub and pvt key from [no extention, pub key will be taken from '.pub' file]"),
+                ).about("add an existing key to the keyring"),
         )
-        .subcommand(clap::command!("use").arg(key_arg.clone()))
-        .subcommand(clap::command!("get-pub").arg(key_arg.clone()))
+        .subcommand(clap::command!("use")
+                    .arg(key_arg.clone())
+                    .about("Switch to a differenct profile"))
+        .subcommand(clap::command!("get-pub")
+                    .arg(key_arg.clone())
+                    .about("Outputs the pub key to later be copied and added to apps that requires it [e.g. github ssh key]"))
         .get_matches();
 
     let conf_path = format!(
