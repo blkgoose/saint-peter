@@ -57,9 +57,13 @@ fn main() {
     let key_arg = Arg::with_name("key_name").required(true).index(1);
 
     let arguments = App::new("saint-peter")
-        .version("0.0.2")
+        .version("0.0.3")
         .author("Alessio Biancone <alebian1996@gmail.com>")
         .bin_name("saint-peter")
+        .arg(clap::arg!(--"conf" [CONF])
+             .value_parser(clap::value_parser!(std::path::PathBuf))
+             .help("use a different configuration")
+             )
         .subcommand_required(true)
         .subcommand(
             clap::command!("add-existing")
@@ -81,14 +85,17 @@ fn main() {
                     .about("Outputs the pub key to later be copied and added to apps that requires it [e.g. github ssh key]"))
         .get_matches();
 
-    let conf_path = format!(
+    let default_conf_path: PathBuf = format!(
         "{}/.config/saint-peter.json",
         env::var("HOME").expect("HOME variable should be set"),
-    );
+    )
+    .into();
 
-    let db_path: PathBuf = format!("{}", conf_path).into();
+    let conf_path: &PathBuf = arguments
+        .get_one::<PathBuf>("conf")
+        .unwrap_or(&default_conf_path);
 
-    let mut conf: Config = Config::open(db_path.clone());
+    let mut conf: Config = Config::open(conf_path.clone());
 
     match arguments.subcommand() {
         Some(("add-existing", matches)) => {
