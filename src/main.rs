@@ -83,6 +83,9 @@ fn main() {
         .subcommand(clap::command!("get-pub")
                     .arg(key_arg.clone())
                     .about("Outputs the pub key to later be copied and added to apps that requires it [e.g. github ssh key]"))
+        .subcommand(clap::command!("delete")
+                    .arg(key_arg.clone())
+                    .about("Delete profile"))
         .get_matches();
 
     let default_conf_path: PathBuf = format!(
@@ -160,6 +163,19 @@ fn main() {
             match conf.keys.get(name) {
                 Some(user) => {
                     eprintln!("{}", user.public_key);
+                }
+                None => {
+                    eprintln!("ERROR: cannot find specified user");
+                    exit(1)
+                }
+            }
+        }
+        Some(("delete", matches)) => {
+            let name: &String = matches.get_one("key_name").unwrap();
+
+            match conf.keys.get(name) {
+                Some(_) => {
+                    conf.keys.remove(name);
                 }
                 None => {
                     eprintln!("ERROR: cannot find specified user");
