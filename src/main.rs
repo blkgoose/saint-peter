@@ -120,7 +120,7 @@ fn main() {
 
                 conf.save()
             } else {
-                println!("ERROR: cannot read input files");
+                eprintln!("ERROR: cannot read input files");
                 exit(1)
             }
         }
@@ -150,7 +150,7 @@ fn main() {
                     write!(f, "{}", user.private_key).unwrap();
                 }
                 None => {
-                    println!("ERROR: cannot find specified user");
+                    eprintln!("ERROR: cannot find specified user");
                     exit(1)
                 }
             }
@@ -159,10 +159,10 @@ fn main() {
             let name: &String = matches.get_one("key_name").unwrap();
             match conf.users.get(name) {
                 Some(user) => {
-                    println!("{}", user.public_key);
+                    eprintln!("{}", user.public_key);
                 }
                 None => {
-                    println!("ERROR: cannot find specified user");
+                    eprintln!("ERROR: cannot find specified user");
                     exit(1)
                 }
             }
