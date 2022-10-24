@@ -57,7 +57,7 @@ saint-peter get-pub <keyname>
 ```
 > NOTE: Useful in order to add the key to a service like github
 
-##### TODO: Delete saved key
+##### Delete saved key
 ``` bash
 saint-peter delete <keyname>
 ```
