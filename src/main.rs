@@ -14,12 +14,12 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]
 struct Config {
-    users: HashMap<String, User>,
+    keys: HashMap<String, Key>,
     path: PathBuf,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
-struct User {
+struct Key {
     git_name: String,
     git_email: String,
     public_key: String,
@@ -30,11 +30,11 @@ impl Config {
     fn open(path: PathBuf) -> Self {
         match File::open(path.clone()) {
             Ok(f) => Self {
-                users: serde_json::from_reader(f).expect("should be deserializable"),
+                keys: serde_json::from_reader(f).expect("should be deserializable"),
                 path,
             },
             Err(_) => Self {
-                users: HashMap::new(),
+                keys: HashMap::new(),
                 path,
             },
         }
@@ -45,7 +45,7 @@ impl Config {
         create_dir_all(parent_folder).unwrap();
 
         let f = File::create(self.path.clone()).expect("file should be available");
-        serde_json::to_writer_pretty(f, &self.users).expect("config should be serializable")
+        serde_json::to_writer_pretty(f, &self.keys).expect("config should be serializable")
     }
 }
 
@@ -108,9 +108,9 @@ fn main() {
             let prv_file = read_to_string(path.clone());
 
             if let (Ok(public_key), Ok(private_key)) = (pub_file, prv_file) {
-                conf.users.insert(
+                conf.keys.insert(
                     name.clone(),
-                    User {
+                    Key {
                         git_name: git_name.clone(),
                         git_email: git_email.clone(),
                         public_key,
@@ -127,7 +127,7 @@ fn main() {
         Some(("use", matches)) => {
             let name: &String = matches.get_one("key_name").unwrap();
 
-            match conf.users.get(name) {
+            match conf.keys.get(name) {
                 Some(user) => {
                     Command::new("git")
                         .args(["config", "--global", "user.email", &user.git_email])
@@ -157,7 +157,7 @@ fn main() {
         }
         Some(("get-pub", matches)) => {
             let name: &String = matches.get_one("key_name").unwrap();
-            match conf.users.get(name) {
+            match conf.keys.get(name) {
                 Some(user) => {
                     eprintln!("{}", user.public_key);
                 }
