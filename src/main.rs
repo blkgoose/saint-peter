@@ -111,6 +111,12 @@ fn main() {
             let prv_file = read_to_string(path.clone());
 
             if let (Ok(public_key), Ok(private_key)) = (pub_file, prv_file) {
+                if conf.keys.contains_key(name) {
+                    eprint!(
+                        "ERROR: keyname exist already, delete it first if you want to overwrite it"
+                    )
+                }
+
                 conf.keys.insert(
                     name.clone(),
                     Key {
