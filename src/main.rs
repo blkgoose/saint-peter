@@ -166,16 +166,14 @@ fn main() {
             let git_email: &String = matches.get_one("email").unwrap();
             let path: &PathBuf = matches.get_one("file").unwrap();
 
+            if conf.keys.contains_key(name) {
+                eprint!("ERROR: keyname exist already, delete it first if you want to overwrite it")
+            }
+
             let pub_file = read_to_string(format!("{}.pub", path.to_string_lossy()));
             let prv_file = read_to_string(path.clone());
 
             if let (Ok(public_key), Ok(private_key)) = (pub_file, prv_file) {
-                if conf.keys.contains_key(name) {
-                    eprint!(
-                        "ERROR: keyname exist already, delete it first if you want to overwrite it"
-                    )
-                }
-
                 conf.keys.insert(
                     name.clone(),
                     Key {
