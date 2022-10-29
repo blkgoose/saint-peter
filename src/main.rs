@@ -29,14 +29,24 @@ struct Key {
 
 impl Config {
     fn open(path: PathBuf) -> Self {
-        match File::open(path.clone()) {
+        let shellpath: PathBuf = if path.starts_with("~") {
+            path.into_os_string()
+                .into_string()
+                .unwrap()
+                .replace("~", env::var("HOME").unwrap().as_str())
+                .into()
+        } else {
+            path
+        };
+
+        match File::open(shellpath.clone()) {
             Ok(f) => Self {
                 keys: serde_json::from_reader(f).expect("should be deserializable"),
-                path,
+                path: shellpath,
             },
             Err(_) => Self {
                 keys: HashMap::new(),
-                path,
+                path: shellpath,
             },
         }
     }
@@ -62,6 +72,7 @@ fn main() {
         .author("Alessio Biancone <alebian1996@gmail.com>")
         .bin_name("saint-peter")
         .arg(clap::arg!(--"conf" [CONF])
+             .default_value("~/.config/saint-peter.json")
              .value_parser(clap::value_parser!(std::path::PathBuf))
              .help("use a different configuration")
              )
@@ -96,15 +107,8 @@ fn main() {
                     .about("Delete profile"))
         .get_matches();
 
-    let default_conf_path: PathBuf = format!(
-        "{}/.config/saint-peter.json",
-        env::var("HOME").expect("HOME variable should be set"),
-    )
-    .into();
+    let conf_path: &PathBuf = arguments.get_one::<PathBuf>("conf").unwrap();
 
-    let conf_path: &PathBuf = arguments
-        .get_one::<PathBuf>("conf")
-        .unwrap_or(&default_conf_path);
 
     let mut conf: Config = Config::open(conf_path.clone());
 
