@@ -239,6 +239,7 @@ fn main() {
             match conf.keys.get(name) {
                 Some(_) => {
                     conf.keys.remove(name);
+                    conf.save();
                 }
                 None => {
                     eprintln!("ERROR: cannot find specified user");
