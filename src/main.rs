@@ -2,7 +2,7 @@ use std::{
     collections::HashMap,
     env,
     fs::{create_dir_all, read_to_string, File},
-    io::Write,
+    io::{stdin, stdout, Write},
     path::PathBuf,
     process::{exit, Command},
     thread::sleep,
@@ -10,6 +10,7 @@ use std::{
 };
 
 use clap::{App, Arg};
+use osshkeys::{KeyPair, KeyType};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize)]
@@ -66,6 +67,13 @@ fn main() {
              )
         .subcommand_required(true)
         .subcommand(
+            clap::command!("add")
+                .arg(key_arg.clone())
+                .arg(clap::arg!(--"name" <NAME>).required(true))
+                .arg(clap::arg!(--"email" <EMAIL>).required(true))
+                .about("add an existing key to the keyring"),
+        )
+        .subcommand(
             clap::command!("add-existing")
                 .arg(key_arg.clone())
                 .arg(clap::arg!(--"name" <NAME>).required(true))
@@ -101,6 +109,53 @@ fn main() {
     let mut conf: Config = Config::open(conf_path.clone());
 
     match arguments.subcommand() {
+        Some(("add", matches)) => {
+            let name: &String = matches.get_one("key_name").unwrap();
+            let git_name: &String = matches.get_one("name").unwrap();
+            let git_email: &String = matches.get_one("email").unwrap();
+
+            let password: Option<String> = {
+                print!("Enter passphrase (empty for no passphrase): ");
+
+                let mut s = String::new();
+                let _ = stdout().flush();
+                stdin().read_line(&mut s).unwrap();
+
+                s.pop(); // remove "\n"
+
+                if s.is_empty() {
+                    None
+                } else {
+                    Some(s)
+                }
+            };
+
+            if conf.keys.contains_key(name) {
+                eprint!(
+                    "ERROR: keyname exist already, delete it first if you want to overwrite it"
+                );
+                exit(1);
+            }
+
+            let keypair = KeyPair::generate(KeyType::ED25519, 256).unwrap();
+
+            let public_key = keypair.serialize_publickey().unwrap();
+            let private_key = keypair
+                .serialize_openssh(password.as_deref(), osshkeys::cipher::Cipher::Aes256_Ctr)
+                .unwrap();
+
+            conf.keys.insert(
+                name.clone(),
+                Key {
+                    git_name: git_name.clone(),
+                    git_email: git_email.clone(),
+                    public_key,
+                    private_key,
+                },
+            );
+
+            conf.save()
+        }
         Some(("add-existing", matches)) => {
             let name: &String = matches.get_one("key_name").unwrap();
             let git_name: &String = matches.get_one("name").unwrap();
