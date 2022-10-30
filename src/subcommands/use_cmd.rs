@@ -12,6 +12,11 @@ pub fn handle(matches: &clap::ArgMatches, conf: Config) -> Result<()> {
         .get_one("key_name")
         .ok_or(Error::CannotGetConfig("key_name".to_owned()))?;
 
+    let output_path: PathBuf = matches
+        .get_one::<PathBuf>("output-file")
+        .ok_or(Error::CannotGetConfig("output-file".to_owned()))?
+        .clone();
+
     match conf.keys.get(name) {
         Some(user) => {
             Command::new("git")
@@ -24,7 +29,7 @@ pub fn handle(matches: &clap::ArgMatches, conf: Config) -> Result<()> {
                 .args(["config", "--global", "user.name", &user.git_name])
                 .spawn()?;
 
-            let mut f = File::create(utils::shellpath("~/.ssh/SAINT_PETER_GIT_KEY"))?;
+            let mut f = File::create(utils::shellpath(output_path))?;
 
             write!(f, "{}", user.private_key)
                 .or_else(|err| Err(Box::new(err) as Box<dyn std::error::Error>))
