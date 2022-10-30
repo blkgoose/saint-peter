@@ -7,8 +7,32 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: google-github-actions/release-please-action@v3
+      - name: Generating release
+        uses: google-github-actions/release-please-action@v3
+        id: release
         with:
           release-type: rust
           package-name: release-please-action
 
+      - name: Checkout
+        uses: actions/checkout@v2
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Cargo toolchain
+        uses: actions-rs/toolchain@v1
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          toolchain: stable
+
+      - name: Build
+        uses: actions-rs/cargo@v1
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          command: build
+          args: --release --all-features
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ steps.release.outputs.release_created }}
+        with:
+          files: target/release/saint-peter
