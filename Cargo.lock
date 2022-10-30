@@ -584,7 +584,7 @@ checksum = "4501abdff3ae82a1c1b477a17252eb69cee9e66eb915c1abaa4f44d873df9f09"
 
 [[package]]
 name = "saint-peter"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "clap",
  "enum-display-derive",
