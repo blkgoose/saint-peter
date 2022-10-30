@@ -26,5 +26,6 @@ jobs:
 
       - name: Release
         uses: katyo/publish-crates@v1
+        if: ${{ steps.release.outputs.release_created }}
         with:
           registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
