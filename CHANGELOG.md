@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/blkgoose/saint-peter/compare/v0.3.0...v0.3.1) (2022-10-30)
+
+
+### Bug Fixes
+
+* add newline after error print ([2c96777](https://github.com/blkgoose/saint-peter/commit/2c96777ef579b6cdfae21f005e9be19074f72b07))
+* remove ERROR: prefix from some error ([2c96777](https://github.com/blkgoose/saint-peter/commit/2c96777ef579b6cdfae21f005e9be19074f72b07))
+
 ## [0.3.0](https://github.com/blkgoose/saint-peter/compare/v0.2.0...v0.3.0) (2022-10-30)
 
 
