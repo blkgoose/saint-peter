@@ -26,6 +26,7 @@ Use `~/.ssh/SAINT_PETER_GIT_KEY` in your configuration to use saint-peter as key
 Here an example:
 <br>
 inside the file `~/.ssh/config`
+
 ``` ssh-config
 Host github.com
    HostName github.com
