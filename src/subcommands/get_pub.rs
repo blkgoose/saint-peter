@@ -8,6 +8,6 @@ pub fn handle(matches: &clap::ArgMatches, conf: Config) -> Result<()> {
 
     match conf.keys.get(name) {
         Some(user) => Ok(println!("{}", user.public_key)),
-        None => Err("ERROR: cannot find specified user")?,
+        None => Err("cannot find specified user")?,
     }
 }

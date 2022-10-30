@@ -34,6 +34,6 @@ pub fn handle(matches: &clap::ArgMatches, conf: Config) -> Result<()> {
             write!(f, "{}", user.private_key)
                 .or_else(|err| Err(Box::new(err) as Box<dyn std::error::Error>))
         }
-        None => Err("ERROR: cannot find specified user")?,
+        None => Err("cannot find specified user")?,
     }
 }

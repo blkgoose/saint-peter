@@ -9,6 +9,6 @@ pub fn handle(matches: &clap::ArgMatches, mut conf: Config) -> Result<()> {
             conf.keys.remove(name);
             conf.save()
         }
-        None => Err("ERROR: cannot find specified user")?,
+        None => Err("cannot find specified user")?,
     }
 }

@@ -60,7 +60,7 @@ fn main() {
     let conf: Config = Config::open(conf_path.clone());
 
     match subcommands::handle(arguments.subcommand(), conf) {
-        Err(s) => eprint!("ERROR: {}", s),
+        Err(s) => eprintln!("ERROR: {}", s),
         Ok(()) => (),
     }
 }
