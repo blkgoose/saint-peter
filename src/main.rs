@@ -5,6 +5,7 @@ use config::Config;
 
 mod config;
 mod subcommands;
+mod utils;
 
 fn main() {
     let key_arg = Arg::with_name("key_name").required(true).index(1);

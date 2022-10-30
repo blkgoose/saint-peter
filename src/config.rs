@@ -1,10 +1,11 @@
 use serde::{Deserialize, Serialize};
 use std::{
     collections::HashMap,
-    env,
     fs::{create_dir_all, File},
     path::PathBuf,
 };
+
+use crate::utils;
 
 #[derive(Deserialize, Serialize)]
 pub struct Config {
@@ -22,24 +23,16 @@ pub struct Key {
 
 impl Config {
     pub fn open(path: PathBuf) -> Self {
-        let shellpath: PathBuf = if path.starts_with("~") {
-            path.into_os_string()
-                .into_string()
-                .unwrap()
-                .replace("~", env::var("HOME").unwrap().as_str())
-                .into()
-        } else {
-            path
-        };
+        let path = utils::shellpath(path);
 
-        match File::open(shellpath.clone()) {
+        match File::open(path.clone()) {
             Ok(f) => Self {
                 keys: serde_json::from_reader(f).expect("should be deserializable"),
-                path: shellpath,
+                path,
             },
             Err(_) => Self {
                 keys: HashMap::new(),
-                path: shellpath,
+                path,
             },
         }
     }
