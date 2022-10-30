@@ -14,6 +14,12 @@ cargo build --release
 sudo install target/release/saint-peter /usr/bin/saint-peter
 ```
 
+Or from crates.io:
+``` bash
+cargo install saint-peter
+```
+
+
 Use `~/.ssh/SAINT_PETER_GIT_KEY` in your configuration to use saint-peter as key-store.
 > NOTE: you can change the above key position using the `--output-file` option. [default: `~/.ssh/SAINT_PETER_GIT_KEY`]
 <br>
