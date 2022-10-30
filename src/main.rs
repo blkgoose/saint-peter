@@ -11,7 +11,7 @@ fn main() {
     let key_arg = Arg::with_name("key_name").required(true).index(1);
 
     let arguments = App::new("saint-peter")
-        .version("0.0.3")
+        .version(clap::crate_version!())
         .author("Alessio Biancone <alebian1996@gmail.com>")
         .bin_name("saint-peter")
         .arg(clap::arg!(--"conf" [CONF])
