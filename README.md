@@ -15,6 +15,7 @@ sudo install target/release/saint-peter /usr/bin/saint-peter
 ```
 
 Use `~/.ssh/SAINT_PETER_GIT_KEY` in your configuration to use saint-peter as key-store.
+> NOTE: you can change the above key position using the `--output-file` option. [default: `~/.ssh/SAINT_PETER_GIT_KEY`]
 <br>
 Here an example:
 <br>
@@ -25,12 +26,11 @@ Host github.com
    User git
    IdentityFile ~/.ssh/SAINT_PETER_GIT_KEY
 ```
-> NOTE: key position can be changed with the `--key-position` option
 
 #### Usage
-##### TODO: Generate and add a new key to the store
+##### Generate and add a new key to the store
 ``` bash
-saint-peter add-existing \
+saint-peter add \
     --name <username> \
     --email <email> \
     <keyname>
@@ -65,4 +65,4 @@ saint-peter delete <keyname>
 #### Edit configuration
 The configuration is in plain json, if one need to change any of the data, like **username** or **email**,
 it can be done easily in the stored json.
-> NOTE: position of this file can be changed with the `--config` option [default: ~/.config/saint-peter.json]
+> NOTE: position of this file can be changed with the `--config` option [default: `~/.config/saint-peter.json`]
