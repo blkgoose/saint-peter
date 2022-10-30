@@ -1,9 +1,11 @@
-use std::{env, fs::File, process::Command, thread::sleep, time::Duration};
+use std::path::PathBuf;
+use std::{fs::File, process::Command, thread::sleep, time::Duration};
 
 use std::io::Write;
 
 use super::{Error, Result};
 use crate::config::Config;
+use crate::utils;
 
 pub fn handle(matches: &clap::ArgMatches, conf: Config) -> Result<()> {
     let name: &String = matches
@@ -22,10 +24,7 @@ pub fn handle(matches: &clap::ArgMatches, conf: Config) -> Result<()> {
                 .args(["config", "--global", "user.name", &user.git_name])
                 .spawn()?;
 
-            let mut f = File::create(format!(
-                "{}/.ssh/SAINT_PETER_GIT_KEY",
-                env::var("HOME").expect("HOME variable should be set")
-            ))?;
+            let mut f = File::create(utils::shellpath("~/.ssh/SAINT_PETER_GIT_KEY"))?;
 
             write!(f, "{}", user.private_key)
                 .or_else(|err| Err(Box::new(err) as Box<dyn std::error::Error>))
