@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/blkgoose/saint-peter/compare/v0.3.1...v0.4.0) (2022-11-08)
+
+
+### Features
+
+* **set-current:** add subcommand ([026dc3c](https://github.com/blkgoose/saint-peter/commit/026dc3c17c0e58c3d8113ddc42990777cd89670a))
+
 ## [0.3.1](https://github.com/blkgoose/saint-peter/compare/v0.3.0...v0.3.1) (2022-10-30)
 
 
