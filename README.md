@@ -53,6 +53,11 @@ saint-peter add-existing \
 ```
 > NOTE: The old file can be deleted as it is stored inside the internal store
 
+##### Set current repo config permanently
+``` bash
+saint-peter set-current <keyname>
+```
+
 ##### Use key
 ``` bash
 saint-peter use <keyname>
