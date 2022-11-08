@@ -43,7 +43,6 @@ impl Config {
 
         let f = File::create(self.path.clone())?;
 
-        serde_json::to_writer_pretty(f, &self.keys)
-            .or_else(|err| Err(Box::new(err) as Box<dyn std::error::Error>))
+        serde_json::to_writer_pretty(f, &self.keys).map_err(|err| Box::new(err) as Box<dyn std::error::Error>)
     }
 }

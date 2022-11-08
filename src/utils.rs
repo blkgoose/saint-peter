@@ -5,7 +5,7 @@ pub fn shellpath(path: PathBuf) -> PathBuf {
         path.into_os_string()
             .into_string()
             .unwrap()
-            .replace("~", env::var("HOME").unwrap().as_str())
+            .replace('~', env::var("HOME").unwrap().as_str())
             .into()
     } else {
         path
