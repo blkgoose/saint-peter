@@ -25,7 +25,7 @@ pub fn handle(matches: &clap::ArgMatches, conf: Config) -> Result<()> {
             Command::new("git")
                 .args([
                     "config",
-                    "core.sshCOmmand",
+                    "core.sshCommand",
                     format!("saint-peter use {}; ssh", name).as_ref(),
                 ])
                 .spawn()?;
