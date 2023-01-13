@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/blkgoose/saint-peter/compare/v0.4.0...v0.4.1) (2023-01-13)
+
+
+### Bug Fixes
+
+* ssh command typo ([401ba80](https://github.com/blkgoose/saint-peter/commit/401ba80aedbe3cfc960a152c80e441cdaa0b1559))
+
 ## [0.4.0](https://github.com/blkgoose/saint-peter/compare/v0.3.1...v0.4.0) (2022-11-08)
 
 
