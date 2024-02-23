@@ -1,6 +1,6 @@
 [package]
 name = "saint-peter"
-version = "0.4.1"
+version = "21.0.0"
 edition = "2021"
 description = "git ssh keys store and manager"
 license = "GPL-3.0"

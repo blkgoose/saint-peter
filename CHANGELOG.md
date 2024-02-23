@@ -1,5 +1,12 @@
 # Changelog
 
+## [21.0.0](https://github.com/blkgoose/saint-peter/compare/v0.4.1...v21.0.0) (2024-02-23)
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([3b2972c](https://github.com/blkgoose/saint-peter/commit/3b2972cf818a0eba4ec00834e67677b7d318cd32))
+
 ## [0.4.1](https://github.com/blkgoose/saint-peter/compare/v0.4.0...v0.4.1) (2023-01-13)
 
 
