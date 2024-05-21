@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/blkgoose/saint-peter/compare/v1.0.0...v1.1.0) (2024-05-21)
+
+
+### Features
+
+* use vendored openssl ([68e6042](https://github.com/blkgoose/saint-peter/commit/68e60424fa929ec630775aae2b2f7ccf0a6e0367))
+
 ## [1.0.0](https://github.com/blkgoose/saint-peter/compare/v21.0.0...v1.0.0) (2024-02-23)
 
 
