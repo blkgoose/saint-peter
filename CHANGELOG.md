@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1](https://github.com/blkgoose/saint-peter/compare/v1.1.0...v1.1.1) - 2026-04-23
+
+### Other
+
+- switch from release-please to release-plz
+
 ## [1.1.0](https://github.com/blkgoose/saint-peter/compare/v1.0.0...v1.1.0) (2024-05-21)
 
 
